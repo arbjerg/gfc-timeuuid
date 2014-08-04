@@ -20,7 +20,7 @@ private[timeuuid] trait Node {
   def id: Try[Long]
 
   protected def convertMacAddressToLong(macAddress: Array[Byte]): Long = {
-    require(macAddress.length == 6, s"macAddress should be 6 bytes, was ${macAddress.mkString(",")}")
+    assert(macAddress.length == 6, "macAddress should be 6 bytes, was " + macAddress.mkString(","))
     val (result, _) = macAddress.foldLeft((0L, 0)) {
       case ((node, index), byte) =>
         (node | (0x00000000000000ffL & byte.asInstanceOf[Long]) << (index * 8), index + 1)
